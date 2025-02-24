@@ -1,0 +1,23 @@
+# Ignore Python cache
+__pycache__/
+*.py[cod]
+*.sqlite3
+
+# Ignore environment files
+venv/
+.env
+
+# Ignore compiled files
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore Django secret key (if any)
+settings.py
+
+# Ignore database migrations (optional)
+migrations/
+
+# Ignore VSCode and JetBrains files
+.vscode/
+.idea/

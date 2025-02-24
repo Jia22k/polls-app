@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+
+{% block title %}Create a Poll{% endblock %}
+
+{% block content %}
+<div class="glass-card">
+    <div class="header">
+        <h2>📝 Create a New Poll</h2>
+        <a href="{% url 'polls:index' %}" class="btn-cancel">✖</a>
+    </div>
+    <hr class="divider">
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="input-group">
+            <label for="question_text">Poll Question</label>
+            <input type="text" id="question_text" name="question_text" placeholder="Enter your poll question" required>
+        </div>
+
+        <label for="choice_text">Choices</label>
+        <div id="choices-container">
+            <div class="input-group">
+                <input type="text" id="choice_1" name="choice_text" placeholder="Enter choice" required>
+            </div>
+        </div>
+
+        <div class="center-btn">
+            <button type="button" id="add-choice" class="text-btn">+ Add Choice</button>
+        </div>
+
+        <div class="btn-group">
+            <button type="submit" class="btn-primary">Submit Poll</button>
+        </div>
+    </form>
+</div>
+
+<style>
+    .glass-card {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(10px);
+        border-radius: 12px;
+        padding: 24px;
+        box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+        max-width: 500px;
+        margin: auto;
+    }
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .btn-cancel {
+        background: transparent;
+        border: none;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        text-decoration: none;
+        color: black;
+        transition: opacity 0.2s ease-in-out;
+    }
+    .btn-cancel:hover {
+        opacity: 0.6;
+    }
+    .divider {
+        border: none;
+        height: 2px;
+        background: black;
+        width: 100%;
+        margin: 12px 0;
+    }
+    .input-group {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 12px;
+    }
+    label {
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 4px;
+    }
+    input {
+        width: 100%;
+        padding: 12px;
+        border-radius: 24px; /* Same border-radius for uniformity */
+        border: 1px solid #ccc;
+        font-size: 14px;
+        text-align: center;
+    }
+    .center-btn {
+        display: flex;
+        justify-content: center;
+        margin: 12px 0;
+    }
+    .text-btn {
+        background: none;
+        border: none;
+        font-size: 14px;
+        font-weight: bold;
+        color: gray;
+        cursor: pointer;
+    }
+    .text-btn:hover {
+        color: black;
+    }
+    .btn-group {
+        display: flex;
+        gap: 8px;
+        margin-top: 16px;
+    }
+    .btn-primary {
+        background: black;
+        color: white;
+        border: none;
+        padding: 12px 15px;
+        font-weight: bold;
+        flex: 1;
+        text-align: center;
+        border-radius: 24px;
+    }
+    .btn-secondary {
+        background: white;
+        border: 1px solid black;
+        color: black;
+        padding: 12px 15px;
+        font-weight: bold;
+        flex: 1;
+        text-align: center;
+        border-radius: 24px;
+        text-decoration: none;
+    }
+</style>
+
+<script>
+    document.getElementById("add-choice").addEventListener("click", function() {
+        let choiceContainer = document.getElementById("choices-container");
+        let newChoice = document.createElement("div");
+        newChoice.classList.add("input-group");
+        newChoice.innerHTML = `<input type="text" name="choice_text" placeholder="Enter choice" required>`;
+        choiceContainer.appendChild(newChoice);
+    });
+</script>
+
+{% endblock %}

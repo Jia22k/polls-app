@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}Poll Results{% endblock %}
+
+{% block content %}
+<div class="glass-card">
+    <h2> Poll Results</h2>
+    <p class="poll-question">{{ question.question_text }}</p>
+
+    <ul class="list-group mt-3">
+        {% for choice in question.choice_set.all %}
+            <li class="list-group-item d-flex justify-content-between align-items-center border-0">
+                <span class="fw-bold">{{ choice.choice_text }}</span>
+                <span class="badge bg-dark rounded-pill">{{ choice.vote_set.count }} Votes</span>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <div class="d-flex gap-2 mt-3">
+        <a href="{% url 'polls:detail' question.id %}" class="btn btn-primary w-100">Vote Again</a>
+        <a href="{% url 'polls:index' %}" class="btn btn-secondary w-100">All Polls</a>
+    </div>
+</div>
+
+<style>
+    .glass-card {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(10px);
+        border-radius: 12px;
+        padding: 24px;
+        box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+        max-width: 500px;
+        margin: auto;
+        text-align: center;
+    }
+    .poll-question {
+        font-size: 18px;
+        font-weight: 500;
+        margin-bottom: 16px;
+    }
+    .list-group-item {
+        background: rgba(240, 240, 240, 0.7);
+        border-radius: 8px;
+        margin-bottom: 6px;
+    }
+    .badge {
+        font-size: 14px;
+        padding: 6px 12px;
+    }
+</style>
+{% endblock %}

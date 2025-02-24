@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Vote{% endblock %}
+
+{% block content %}
+<div class="glass-card">
+    <h2>🗳️ {{ question.question_text }}</h2>
+
+    {% if user.is_authenticated %}
+        <form action="{% url 'polls:vote' question.id %}" method="post">
+            {% csrf_token %}
+            <div class="list-group mt-3">
+                {% for choice in question.choice_set.all %}
+                    <label class="list-group-item d-flex align-items-center border-0">
+                        <input type="radio" name="choice" class="form-check-input me-2" value="{{ choice.id }}" required>
+                        {{ choice.choice_text }}
+                    </label>
+                {% endfor %}
+            </div>
+            <button type="submit" class="btn btn-primary mt-3 w-100">Submit Vote</button>
+        </form>
+    {% else %}
+        <p class="text-danger text-center">You must log in to vote.</p>
+    {% endif %}
+</div>
+{% endblock %}

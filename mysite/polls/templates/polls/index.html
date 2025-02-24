@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block title %}Polls{% endblock %}
+
+{% block content %}
+<div class="glass-card">
+    <div class="header">
+        <h2>📋 Available Polls</h2>
+
+        {% if user.is_authenticated %}
+        <a href="{% url 'polls:create' %}" class="btn-create">
+            ➕ Create Poll
+        </a>
+        {% endif %}
+    </div>
+    <hr class="divider">
+
+    <ul class="list-group mt-3">
+        {% for question in latest_question_list %}
+            <li class="list-group-item d-flex justify-content-between align-items-center border-0">
+                <a href="{% url 'polls:detail' question.id %}" class="text-dark fw-bold">{{ question.question_text }}</a>
+                <span class="badge bg-dark rounded-pill">{{ question.vote_set.count }} Votes</span>
+            </li>
+        {% empty %}
+            <li class="list-group-item text-center border-0">No polls available.</li>
+        {% endfor %}
+    </ul>
+</div>
+
+<style>
+    .glass-card {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(10px);
+        border-radius: 12px;
+        padding: 24px;
+        box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        margin: auto;
+    }
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .divider {
+        border: none;
+        height: 2px;
+        background: black;
+        width: 100%;
+        margin: 12px 0;
+    }
+    .btn-create {
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 8px 12px;
+        font-weight: 600;
+        font-size: 14px;
+        border-radius: 6px;
+        text-decoration: none;
+        transition: all 0.2s ease-in-out;
+    }
+    .btn-create:hover {
+        background: black;
+    }
+    .list-group-item {
+        background: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(10px);
+        border-radius: 8px;
+        margin-top: 8px;
+        padding: 12px;
+        font-weight: bold;
+    }
+</style>
+
+{% endblock %}
